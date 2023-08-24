@@ -1,0 +1,6 @@
+<properties>
+
+    <property id="AccentColor" type="number">1</property>
+    <property id="IsDinamicCircle" type="boolean">true</property>
+
+</properties>

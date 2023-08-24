@@ -1,3 +1,5 @@
 <drawables>
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <bitmap id="RunOrelBlueLogo" filename="logo_blue_260.png" />
+    <bitmap id="RunOrelOrangeLogo" filename="logo_orange_260.png" />
 </drawables>
