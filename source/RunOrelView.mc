@@ -21,7 +21,8 @@ class RunOrelView extends WatchUi.WatchFace {
     // Load your resources here
     function onLayout(dc as Dc) as Void {
         runOrelBlueLogo = WatchUi.loadResource(Rez.Drawables.RunOrelBlueLogo);
-        runOrelOrangeLogo = WatchUi.loadResource(Rez.Drawables.RunOrelOrangeLogo);
+        runOrelOrangeLogo;
+        // = WatchUi.loadResource(Rez.Drawables.RunOrelOrangeLogo);
         screenHeight = dc.getHeight();
         screenWidth = dc.getWidth();
         isSleepMode = false;
@@ -39,13 +40,22 @@ class RunOrelView extends WatchUi.WatchFace {
     function onUpdate(dc as Dc) as Void {
         var now = Time.now();
         var currentTime = Gregorian.info(now, Time.FORMAT_MEDIUM);
-        var accentColorNum = Application.Properties.getValue("AccentColor");
-        var isDinamicCircle = Application.Properties.getValue("IsDinamicCircle");
+        var accentColorNum;
+        var isDinamicCircle;
+        if (Toybox has :Application && Application has :Properties) {
+            accentColorNum = Application.Properties.getValue("AccentColor");
+            isDinamicCircle = Application.Properties.getValue("IsDinamicCircle");
+        } else {
+            accentColorNum = 1;
+            isDinamicCircle = true;
+        }
         accentColor = accentColorNum == 1 ? blueColor : orangeColor; 
         var logoToDraw = accentColorNum == 1 ? runOrelBlueLogo : runOrelOrangeLogo; 
         
         View.onUpdate(dc);
-        dc.setAntiAlias(true);
+        if (Dc has :setAntiAlias) {
+            dc.setAntiAlias(true);
+        }
         dc.setColor(Graphics.COLOR_TRANSPARENT, Graphics.COLOR_WHITE);
         dc.clear();
 
@@ -79,7 +89,7 @@ class RunOrelView extends WatchUi.WatchFace {
         var MAX_DEGREES = 360;
         var MAX_SECONDS = 60;
         var endDegree = (((60 - seconds) * MAX_DEGREES) / MAX_SECONDS + START_ARC_DEGREE) % MAX_DEGREES;
-        var penWidth = screenWidth / 32;
+        var penWidth = screenWidth / 30;
         var cx = screenWidth / 2 - 1;
         var cy = screenHeight / 2 - 1;
         var radius = screenWidth / 2 - (penWidth / 2) + 1;
@@ -87,6 +97,11 @@ class RunOrelView extends WatchUi.WatchFace {
         dc.setColor(accentColor, Graphics.COLOR_TRANSPARENT);
         if (seconds > 0) {
             dc.setPenWidth(penWidth);
+            dc.drawArc(cx, cy, radius, Graphics.ARC_CLOCKWISE, START_ARC_DEGREE, endDegree);
+            dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+            var whitePenWidth = penWidth / 4;
+            dc.setPenWidth(whitePenWidth);
+            radius = screenWidth / 2 - penWidth + whitePenWidth / 2;
             dc.drawArc(cx, cy, radius, Graphics.ARC_CLOCKWISE, START_ARC_DEGREE, endDegree);
         }
     }

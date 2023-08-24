@@ -5,7 +5,7 @@
         Use "Monkey C: Edit Application" from the Visual Studio Code command palette
         to update the application attributes.
     -->
-    <iq:application id="e347992e-e4d8-4ce0-b9b4-d184dc2b7af2" type="watchface" name="@Strings.AppName" entry="RunOrelApp" launcherIcon="@Drawables.LauncherIcon" minApiLevel="1.2.0">
+    <iq:application id="e347992e-e4d8-4ce0-b9b4-d184dc2b7af2" type="watchface" name="@Strings.AppName" entry="RunOrelApp" launcherIcon="@Drawables.LauncherIcon" minApiLevel="1.4.0">
         <!--
             Use the following from the Visual Studio Code comand palette to edit
             the build targets:
@@ -32,7 +32,6 @@
             <iq:product id="descentmk2"/>
             <iq:product id="descentmk2s"/>
             <iq:product id="enduro"/>
-            <iq:product id="epix"/>
             <iq:product id="epix2"/>
             <iq:product id="epix2pro42mm"/>
             <iq:product id="epix2pro47mm"/>
