@@ -1,0 +1,9 @@
+<strings>
+    <string id="AppName">Run Orel</string>
+    <string id="AccentColorTitle">Цветовая схема</string>
+    <string id="IsDinamicCircleTitle">Использовать обводку в качестве секунд</string>
+    <string id="OrangeSchema">Оранжевая</string>
+    <string id="BlueSchema">Синяя</string>
+    <string id="OrangeColor">0xff6600</string>
+    <string id="BlueColor">0x6633cc</string>
+</strings>

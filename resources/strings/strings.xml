@@ -1,7 +1,7 @@
 <strings>
     <string id="AppName">Run Orel</string>
     <string id="AccentColorTitle">Collor schema</string>
-    <string id="IsDinamicCircleTitle">Use circle as seconds</string>
+    <string id="IsDinamicCircleTitle">Use outline as seconds</string>
     <string id="OrangeSchema">Orange</string>
     <string id="BlueSchema">Blue</string>
     <string id="OrangeColor">0xff6600</string>

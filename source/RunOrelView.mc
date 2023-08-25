@@ -5,14 +5,14 @@ import Toybox.WatchUi;
 import Toybox.Time.Gregorian;
 
 class RunOrelView extends WatchUi.WatchFace {
-    var runOrelBlueLogo;
-    var runOrelOrangeLogo;
+    var logoToDraw;
     var screenHeight;
     var screenWidth;
     var accentColor;
     var isSleepMode;
     var orangeColor;
     var blueColor;
+    var previousLogoNum;
 
     function initialize() {
         WatchFace.initialize();
@@ -20,14 +20,14 @@ class RunOrelView extends WatchUi.WatchFace {
 
     // Load your resources here
     function onLayout(dc as Dc) as Void {
-        runOrelBlueLogo = WatchUi.loadResource(Rez.Drawables.RunOrelBlueLogo);
-        runOrelOrangeLogo;
-        // = WatchUi.loadResource(Rez.Drawables.RunOrelOrangeLogo);
         screenHeight = dc.getHeight();
         screenWidth = dc.getWidth();
         isSleepMode = false;
         blueColor = WatchUi.loadResource(Rez.Strings.BlueColor).toNumberWithBase(16);
         orangeColor = WatchUi.loadResource(Rez.Strings.OrangeColor).toNumberWithBase(16);
+        previousLogoNum = 1; 
+        logoToDraw = WatchUi.loadResource(Rez.Drawables.RunOrelBlueLogo);
+        accentColor = blueColor;
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -46,11 +46,15 @@ class RunOrelView extends WatchUi.WatchFace {
             accentColorNum = Application.Properties.getValue("AccentColor");
             isDinamicCircle = Application.Properties.getValue("IsDinamicCircle");
         } else {
-            accentColorNum = 1;
-            isDinamicCircle = true;
+            accentColorNum = Application.getApp().getProperty("AccentColor");
+            isDinamicCircle = Application.getApp().getProperty("IsDinamicCircle");
         }
-        accentColor = accentColorNum == 1 ? blueColor : orangeColor; 
-        var logoToDraw = accentColorNum == 1 ? runOrelBlueLogo : runOrelOrangeLogo; 
+        if (previousLogoNum != accentColorNum) {
+            logoToDraw = null;
+            logoToDraw = accentColorNum == 1 ? WatchUi.loadResource(Rez.Drawables.RunOrelBlueLogo) : WatchUi.loadResource(Rez.Drawables.RunOrelOrangeLogo);
+            accentColor = accentColorNum == 1 ? blueColor : orangeColor; 
+            previousLogoNum = accentColorNum;
+        } 
         
         View.onUpdate(dc);
         if (Dc has :setAntiAlias) {
@@ -99,10 +103,12 @@ class RunOrelView extends WatchUi.WatchFace {
             dc.setPenWidth(penWidth);
             dc.drawArc(cx, cy, radius, Graphics.ARC_CLOCKWISE, START_ARC_DEGREE, endDegree);
             dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-            var whitePenWidth = penWidth / 4;
-            dc.setPenWidth(whitePenWidth);
-            radius = screenWidth / 2 - penWidth + whitePenWidth / 2;
-            dc.drawArc(cx, cy, radius, Graphics.ARC_CLOCKWISE, START_ARC_DEGREE, endDegree);
+            if (seconds != 60) {
+                var whitePenWidth = penWidth / 4;
+                dc.setPenWidth(whitePenWidth);
+                radius = screenWidth / 2 - penWidth + whitePenWidth / 2;
+                dc.drawArc(cx, cy, radius, Graphics.ARC_CLOCKWISE, START_ARC_DEGREE, endDegree);
+            }
         }
     }
 
