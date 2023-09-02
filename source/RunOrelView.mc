@@ -42,12 +42,15 @@ class RunOrelView extends WatchUi.WatchFace {
         var currentTime = Gregorian.info(now, Time.FORMAT_MEDIUM);
         var accentColorNum;
         var isDinamicCircle;
+        var additionalDataField;
         if (Toybox has :Application && Application has :Properties) {
             accentColorNum = Application.Properties.getValue("AccentColor");
             isDinamicCircle = Application.Properties.getValue("IsDinamicCircle");
+            additionalDataField = Application.Properties.getValue("AdditionalData");
         } else {
             accentColorNum = Application.getApp().getProperty("AccentColor");
             isDinamicCircle = Application.getApp().getProperty("IsDinamicCircle");
+            additionalDataField = Application.getApp().getProperty("AdditionalData");
         }
         if (previousLogoNum != accentColorNum) {
             logoToDraw = null;
@@ -69,7 +72,12 @@ class RunOrelView extends WatchUi.WatchFace {
         } else {
             drawSeconds(dc, currentTime.sec);
         }
-        drawDate(dc, currentTime);
+
+        if (additionalDataField == 1) {
+            drawDate(dc, currentTime);
+        } else {
+            drawSteps(dc, getSteps());
+        }
     }
 
     // Called when this View is removed from the screen. Save the
@@ -115,7 +123,15 @@ class RunOrelView extends WatchUi.WatchFace {
     function drawDate(dc as Dc, currentTime) {
         var date = Lang.format("$1$ $2$ $3$", [currentTime.day_of_week, currentTime.day, currentTime.month]);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-
         dc.drawText(screenWidth * 0.40, screenHeight * 0.80, Graphics.FONT_XTINY, date, Graphics.TEXT_JUSTIFY_LEFT);
+    }
+    
+    function drawSteps(dc as Dc, stepsNumber) {
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(screenWidth * 0.40, screenHeight * 0.80, Graphics.FONT_XTINY, stepsNumber, Graphics.TEXT_JUSTIFY_LEFT);
+    }
+
+    function getSteps() {
+        return Lang.format("$1$", [ActivityMonitor.getInfo().steps]);
     }
 }

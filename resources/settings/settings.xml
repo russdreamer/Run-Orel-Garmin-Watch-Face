@@ -1,9 +1,16 @@
 <settings>
 
-     <setting propertyKey="@Properties.AccentColor" title="@Strings.AccentColorTitle">
+    <setting propertyKey="@Properties.AccentColor" title="@Strings.AccentColorTitle">
         <settingConfig type="list">
             <listEntry value="1">@Strings.BlueSchema</listEntry>
             <listEntry value="2">@Strings.OrangeSchema</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.AdditionalData" title="@Strings.AdditionalDataTitle">
+        <settingConfig type="list">
+            <listEntry value="1">@Strings.Date</listEntry>
+            <listEntry value="2">@Strings.Steps</listEntry>
         </settingConfig>
     </setting>
 

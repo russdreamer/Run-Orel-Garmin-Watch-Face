@@ -1,6 +1,9 @@
 <strings>
     <string id="AppName">Run Orel</string>
     <string id="AccentColorTitle">Collor schema</string>
+    <string id="AdditionalDataTitle">Additional data field</string>
+    <string id="Date">Date</string>
+    <string id="Steps">Steps</string>
     <string id="IsDinamicCircleTitle">Use outline as seconds</string>
     <string id="OrangeSchema">Orange</string>
     <string id="BlueSchema">Blue</string>
